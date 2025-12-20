@@ -1,4 +1,7 @@
 {
   "name": "deno-vite-react",
-  "comment": "This only exists to help vite module resolution. Do not use this file, instread use deno.json."
+  "comment": "This only exists to help vite module resolution. Do not use this file, instread use deno.json.",
+  "dependencies": {
+    "@react-router/dev": "^7.11.0"
+  }
 }
