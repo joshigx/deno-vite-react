@@ -15,6 +15,7 @@
     "jsr:@std/streams@^1.0.14": "1.0.14",
     "npm:@deno/vite-plugin@1.0.4": "1.0.4_vite@6.3.5__picomatch@4.0.3",
     "npm:@react-router/dev@7.10.1": "7.10.1_@react-router+serve@7.10.1__react-router@7.10.1___react@19.2.2___react-dom@19.2.2____react@19.2.2__express@4.22.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_vite@6.3.5__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.2_react-dom@19.2.2__react@19.2.2",
+    "npm:@react-router/dev@^7.11.0": "7.11.0_@react-router+serve@7.10.1__react-router@7.10.1___react@19.2.2___react-dom@19.2.2____react@19.2.2__express@4.22.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_vite@6.3.5__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.2_react-dom@19.2.2__react@19.2.2",
     "npm:@react-router/serve@7.10.1": "7.10.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_express@4.22.1_react@19.2.2_react-dom@19.2.2__react@19.2.2",
     "npm:@tailwindcss/vite@4.1.7": "4.1.7_vite@6.3.5__picomatch@4.0.3",
     "npm:@types/react-dom@19.2.3": "19.2.3_@types+react@19.2.7",
@@ -486,7 +487,47 @@
         "@babel/preset-typescript",
         "@babel/traverse",
         "@babel/types",
-        "@react-router/node",
+        "@react-router/node@7.10.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2",
+        "@react-router/serve",
+        "@remix-run/node-fetch-server",
+        "arg",
+        "babel-dead-code-elimination",
+        "chokidar",
+        "dedent",
+        "es-module-lexer",
+        "exit-hook",
+        "isbot",
+        "jsesc",
+        "lodash",
+        "p-map",
+        "pathe@1.1.2",
+        "picocolors",
+        "pkg-types",
+        "prettier",
+        "react-refresh",
+        "react-router",
+        "semver@7.7.3",
+        "tinyglobby",
+        "valibot",
+        "vite",
+        "vite-node"
+      ],
+      "optionalPeers": [
+        "@react-router/serve"
+      ],
+      "bin": true
+    },
+    "@react-router/dev@7.11.0_@react-router+serve@7.10.1__react-router@7.10.1___react@19.2.2___react-dom@19.2.2____react@19.2.2__express@4.22.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_vite@6.3.5__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.2_react-dom@19.2.2__react@19.2.2": {
+      "integrity": "sha512-g1ou5Zw3r4mCU0L+EXH4vRtAiyt8qz1JOvL1k+PW4rZ4+71h5nBy/fLgD7cg5BnzQZmjRO1PzCgpF5BIrlKYxQ==",
+      "dependencies": [
+        "@babel/core",
+        "@babel/generator",
+        "@babel/parser",
+        "@babel/plugin-syntax-jsx",
+        "@babel/preset-typescript",
+        "@babel/traverse",
+        "@babel/types",
+        "@react-router/node@7.11.0_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2",
         "@react-router/serve",
         "@remix-run/node-fetch-server",
         "arg",
@@ -519,7 +560,7 @@
     "@react-router/express@7.10.1_express@4.22.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2": {
       "integrity": "sha512-O7xjg6wWHfrsnPyVWgQG+tCamIE09SqLqtHwa1tAFzKPjcDpCw4S4+/OkJvNXLtBL60H3VhZ1r2OQgXBgGOMpw==",
       "dependencies": [
-        "@react-router/node",
+        "@react-router/node@7.10.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2",
         "express",
         "react-router"
       ]
@@ -531,12 +572,19 @@
         "react-router"
       ]
     },
+    "@react-router/node@7.11.0_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2": {
+      "integrity": "sha512-11ha8EW+F7wTMmPz2pdi11LJxz2irtuksiCpunpZjtpPmYU37S+GGihG8vFeTa2xFPNunEaHNlfzKyzeYm570Q==",
+      "dependencies": [
+        "@mjackson/node-fetch-server",
+        "react-router"
+      ]
+    },
     "@react-router/serve@7.10.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_express@4.22.1_react@19.2.2_react-dom@19.2.2__react@19.2.2": {
       "integrity": "sha512-qYco7sFpbRgoKJKsCgJmFBQwaLVsLv255K8vbPodnXe13YBEzV/ugIqRCYVz2hghvlPiEKgaHh2On0s/5npn6w==",
       "dependencies": [
         "@mjackson/node-fetch-server",
         "@react-router/express",
-        "@react-router/node",
+        "@react-router/node@7.10.1_react-router@7.10.1__react@19.2.2__react-dom@19.2.2___react@19.2.2_react@19.2.2_react-dom@19.2.2__react@19.2.2",
         "compression",
         "express",
         "get-port",
@@ -1679,6 +1727,11 @@
       "npm:react@19.2.2",
       "npm:tailwindcss@4.1.7",
       "npm:vite@6.3.5"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@react-router/dev@^7.11.0"
+      ]
+    }
   }
 }
