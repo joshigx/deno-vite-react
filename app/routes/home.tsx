@@ -15,5 +15,10 @@ export function loader() {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  return <Welcome denoVersion={loaderData.denoVersion} />;
+  return (
+  <>
+  <Welcome denoVersion={loaderData.denoVersion} />
+  <p></p>
+</>
+  );
 }

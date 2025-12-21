@@ -16,4 +16,7 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    allowedHosts: ['deno-vite-react--local.brightfuture.deno.net']
+  }
 });
