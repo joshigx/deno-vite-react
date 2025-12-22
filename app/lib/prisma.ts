@@ -1,3 +1,5 @@
+//do not use if possible, use prisma.server.ts instead
+
 import { PrismaClient } from "../generated/prisma/client.ts";
 import { PrismaPg } from "@prisma/adapter-pg";
 import process from "node:process";
