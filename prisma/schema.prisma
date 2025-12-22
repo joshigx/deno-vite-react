@@ -11,10 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19OVDRDa2JKcEJXUkFPQkpHbWY3ajciLCJhcGlfa2V5IjoiMDFLRDM0NVFLUDYwWVo0OVE0UzlKQVdLTjciLCJ0ZW5hbnRfaWQiOiI1ZjI0OGQyNDMzMGY2YjliY2MyZmYyOWFhNmVjOTkzMzA1NGY5ZTA3ZTJjZDFiMjcwNzI3MzBhZjUxNjQ5YzFhIiwiaW50ZXJuYWxfc2VjcmV0IjoiNzllYzNmOWMtYzUxYy00MDY0LTk2MTAtYzJmYmRlNzE1ZDE4In0.KBRnJkWsXWMaM7j2-TPjmC77Hm7GQXxbXpCL1D0Ky20"
-}
-
-
+  }
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
