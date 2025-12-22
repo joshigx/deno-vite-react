@@ -9,8 +9,7 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-export async function loader() {
-  
+export async function loader() {  
   const prisma = createPrismaClient();
   try {
     const users = await prisma.user.findMany();
