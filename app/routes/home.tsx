@@ -10,14 +10,19 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export async function loader() {  
+
+
   const prisma = createPrismaClient();
   try {
-    const users = await prisma.user.findMany();
-    return { users };
+    const users: User[] = await prisma.user.findMany();
+
+    return { users: users};
   }
   finally {
     await prisma.$disconnect();
   }
+
+
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
