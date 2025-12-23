@@ -88,7 +88,8 @@ npx prisma db pull
 ## Migration
 https://www.prisma.io/docs/orm/prisma-migrate/getting-started
 npx prisma migrate dev --name migrate_name
-dx prisma... also works
+dx prisma... also work
+dx prisma generate        
 
 ## How to define Models in schema.prisma
 https://www.prisma.io/docs/orm/prisma-schema/data-model/models
