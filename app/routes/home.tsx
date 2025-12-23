@@ -1,6 +1,6 @@
 import type { Route } from "../../.react-router/types/app/routes/+types/home.ts";
 //import type { User } from "../generated/prisma/client.ts";
-import type { UserModel } from "../generated/prisma/models/User.ts";
+import type { UserModel as User } from "../generated/prisma/models/User.ts";
 import { createPrismaClient } from "../lib/prisma.server.ts";
 import type { PrismaClient } from "../generated/prisma/client.ts";
 
@@ -16,7 +16,7 @@ export async function loader({ }: Route.LoaderArgs) {
 
   const prisma: PrismaClient = createPrismaClient();
   try {
-    const users: UserModel[] = await prisma.user.findMany();
+    const users: User[] = await prisma.user.findMany();
 
     return { users: users };
   }
@@ -35,7 +35,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         Superblog
       </h1>
       <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
-        {users.map((user: UserModel) => (
+        {users.map((user: User) => (
           <li key={user.id} className="mb-2">
             {user.name}
           </li>
