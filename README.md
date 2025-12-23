@@ -76,3 +76,10 @@ framework you prefer.
 ---
 
 Built with ❤️ using React Router.
+
+## Introspection workflow
+see here: https://www.prisma.io/docs/orm/prisma-schema/introspection
+1. Change the database schema (e.g. using plain SQL)
+2. Run prisma db pull to update the Prisma schema
+3. Run prisma generate to update Prisma Client
+4. Use the updated Prisma Client in your application
