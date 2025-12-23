@@ -1,6 +1,6 @@
 import type { Route } from "../../.react-router/types/app/routes/+types/home.ts";
+import type { User } from "../generated/prisma/client.ts";
 import { createPrismaClient } from "../lib/prisma.server.ts";
-
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -28,7 +28,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         Superblog
       </h1>
       <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
-        {users.map((user) => (
+        {users.map((user: User) => (
           <li key={user.id} className="mb-2">
             {user.name}
           </li>
