@@ -8,22 +8,16 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  hobby String?
-  color String?
-  name  String?
-  posts Post[]
+model Room {
+  id    String    @id @default(cuid())
+  users User[]
 }
 
+model User {
+  id       String  @id @default(cuid())
+  location Room @relation(fields: [locationId], references: [id])
+  locationId String // relation scalar field  (used in the `@relation` attribute above)
 
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+  name String
+  answer String?
 }
