@@ -49,6 +49,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+     "lib": ["dom", "dom.iterable", "esnext", "deno.ns"],
     "types": [
       "vite/client"
     ],
