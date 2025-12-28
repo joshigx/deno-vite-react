@@ -10,19 +10,39 @@ import Droppable from '../components/droppable.tsx';
 
 
 export default function Dnd() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
   const containers = ['A', 'B', 'C', 'D'];
   const [parent, setParent] = useState<UniqueIdentifier | null>(null);
   //const id = useId();
 
   const draggableMarkup = (
-    <Draggable id="draggable">Drag me</Draggable>
+    <Draggable position={position} id="draggable">Drag me</Draggable>
   );
 
+  function handleDragEnd(event: DragEndEvent) {
 
+    const { delta } = event;
+    setPosition((current) => ({
+      x: current.x + delta.x,
+      y: current.y + delta.y
+    }))
+
+
+    //const { over } = event;
+
+    // If the item is dropped over a container, set it as the parent
+    // otherwise reset the parent to `null`
+    //setParent(over ? over.id : null);
+  }
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
+
       {parent === null ? draggableMarkup : null}
+
+
+
 
       {containers.map((id) => (
         // We updated the Droppable component so it would accept an `id`
@@ -34,13 +54,7 @@ export default function Dnd() {
     </DndContext>
   );
 
-  function handleDragEnd(event: DragEndEvent) {
-    const {over} = event;
 
-    // If the item is dropped over a container, set it as the parent
-    // otherwise reset the parent to `null`
-    setParent(over ? over.id : null);
-  }
 };
 
 
