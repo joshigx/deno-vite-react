@@ -26,6 +26,7 @@ export default function Draggable(props: DraggableProps) {
     left: `${props.position.x}px`,
     top: `${props.position.y}px`,
     transform: `translate3d(${transform?.x || 0}px, ${transform?.y || 0}px, 0)`,
+    touchAction: 'none',
   };
 
 
