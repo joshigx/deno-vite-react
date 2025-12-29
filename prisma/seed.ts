@@ -1,6 +1,5 @@
 //seed with: npx prisma db seed
 
-
 // import { PrismaClient, Prisma } from "../app/generated/prisma/client.ts";
 // import { PrismaPg } from "@prisma/adapter-pg";;
 // import process from "node:process";

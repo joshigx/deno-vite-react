@@ -3,17 +3,17 @@ import eslintPluginReadableTailwind from "eslint-plugin-readable-tailwind";
 export default [
   {
     plugins: {
-      "readable-tailwind": eslintPluginReadableTailwind
+      "readable-tailwind": eslintPluginReadableTailwind,
     },
     rules: {
-      "readable-tailwind/multiline": ["warn", { 
-        classesPerLine: 1 
-      }]
+      "readable-tailwind/multiline": ["warn", {
+        classesPerLine: 1,
+      }],
     },
     settings: {
       "readable-tailwind": {
-        tailwindConfig: "tailwind.config.js"
-      }
-    }
-  }
+        tailwindConfig: "tailwind.config.js",
+      },
+    },
+  },
 ];

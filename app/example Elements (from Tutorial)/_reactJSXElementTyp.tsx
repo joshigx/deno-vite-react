@@ -1,6 +1,6 @@
-import type { ReactElement, ReactNode } from "react";
+import type { ReactElement } from "react";
 
-function Cup({ guest }: {guest: number}) {
+function Cup({ guest }: { guest: number }) {
   return <h2>Tea cup for guest #{guest}</h2>;
 }
 

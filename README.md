@@ -45,7 +45,8 @@ deno task build
 
 ### Deno Deploy
 
-After running a build, deploy to https://deno.com/deploy with the following command:
+After running a build, deploy to https://deno.com/deploy with the following
+command:
 
 ```bash
 deno run -A jsr:@deno/deployctl deploy --entrypoint server.ts
@@ -78,26 +79,30 @@ framework you prefer.
 Built with ❤️ using React Router.
 
 ## Introspection workflow
-see here: https://www.prisma.io/docs/orm/prisma-schema/introspection
-npx prisma db pull
+
+see here: https://www.prisma.io/docs/orm/prisma-schema/introspection npx prisma
+db pull
+
 1. Change the database schema (e.g. using plain SQL)
 2. Run prisma db pull to update the Prisma schema
 3. Run prisma generate to update Prisma Client
 4. Use the updated Prisma Client in your application
 
 ## Migration
-https://www.prisma.io/docs/orm/prisma-migrate/getting-started
-npx prisma migrate dev --name migrate_name
-dx prisma... also work
-dx prisma generate        
+
+https://www.prisma.io/docs/orm/prisma-migrate/getting-started npx prisma migrate
+dev --name migrate_name dx prisma... also work dx prisma generate
 
 ## How to define Models in schema.prisma
+
 https://www.prisma.io/docs/orm/prisma-schema/data-model/models
 
 https://www.prisma.io/docs/orm/prisma-schema/data-model/relations
 https://www.prisma.io/docs/orm/reference/prisma-schema-reference#model-field-scalar-types
 
-Attributes: https://www.prisma.io/docs/orm/reference/prisma-schema-reference#attributes
+Attributes:
+https://www.prisma.io/docs/orm/reference/prisma-schema-reference#attributes
 
 ## Queries:
+
 https://www.prisma.io/docs/orm/reference/prisma-client-reference#model-queries
