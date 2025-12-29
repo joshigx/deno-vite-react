@@ -1,13 +1,11 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function Form() {
-  
   const inputRef = useRef<HTMLInputElement | null>(null);
   //https://developer.mozilla.org/de/docs/Web/HTML/Reference/Elements
   //https://developer.mozilla.org/de/docs/Web/API/HTMLInputElement
 
   function handleClick() {
-    
     inputRef.current?.focus();
   }
 

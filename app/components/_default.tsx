@@ -1,7 +1,7 @@
 export default function HeaderFooter() {
   return (
     <>
-    <p>Hallo</p>
+      <p>Hallo</p>
     </>
   );
 }

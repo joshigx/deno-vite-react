@@ -3,34 +3,28 @@ import type { Route } from "../../.react-router/types/app/routes/+types/home.ts"
 import type { UserModel as User } from "../generated/prisma/models/User.ts";
 import { createPrismaClient } from "../lib/prisma.server.ts";
 import type { PrismaClient } from "../generated/prisma/client.ts";
-import Title from "../components/title.tsx"
+import Title from "../components/title.tsx";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
 
-export async function loader({ }: Route.LoaderArgs) {
-
-
+export async function loader({}: Route.LoaderArgs) {
   const prisma: PrismaClient = createPrismaClient();
   try {
     const users: User[] = await prisma.user.findMany({
       where: {
-        name: "Tim Schubert"
-      }
-
+        name: "Tim Schubert",
+      },
     });
 
     return { users: users };
-  }
-  finally {
+  } finally {
     await prisma.$disconnect();
   }
-
-
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
