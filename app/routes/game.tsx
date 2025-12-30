@@ -1,9 +1,18 @@
-import { DndContext } from "@dnd-kit/core";
+import {
+  DndContext,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+  type UniqueIdentifier,
+} from "@dnd-kit/core";
 import type { Route } from "./+types/game.ts";
 
 import Draggable from "../components/Draggable.tsx";
 import users from "./api/testUsers.json" with { type: "json" };
 import { ClientOnly } from "../components/ClientOnly.tsx";
+import Droppable from "../components/Droppable.tsx";
+import { useState } from "react";
 
 interface Room {
   id: string;
@@ -17,14 +26,14 @@ interface User {
   answer: string;
 }
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "wdw Game" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
 
-export function loader({}: Route.LoaderArgs) {
+export function loader({ }: Route.LoaderArgs) {
   const typedUsers: User[] = users as User[];
   const _lenght = typedUsers.length;
 
@@ -34,10 +43,42 @@ export function loader({}: Route.LoaderArgs) {
 export default function Game({ loaderData }: Route.ComponentProps) {
   const users: User[] = loaderData;
   const startPos = { x: 70, y: 70 };
+  const [dropedOverID, setDropedOverID] = useState<UniqueIdentifier | null | undefined>(null);
+
+
+  const dragStart = (e: DragStartEvent) => {
+    console.log("ID vom gestareten Element: " + e.active.id);
+  };
+
+  const handleDragEnd = (e: DragEndEvent) => {
+
+    console.log("Das Draggable: " + e.active.id + " wurde auf " + e.over?.id + " gedroppt");
+
+    if (e.over?.id) {
+      setDropedOverID(e.over.id);
+    }
+    else {
+      setDropedOverID(null)
+    }
+
+  };
+
+  const dragOver = (e: DragOverEvent) => {
+
+  };
+
+  const dragMove = (e: DragMoveEvent) => {
+
+  };
 
   return (
     <ClientOnly>
-      <DndContext>
+      <DndContext
+        onDragStart={dragStart}
+        onDragEnd={handleDragEnd}
+        onDragOver={dragOver}
+        onDragMove={dragMove}
+      >
         {users.map((user: User) => (
           <Draggable
             startPosition={startPos}
@@ -48,7 +89,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
               event,
             ) => (console.log(
               "Veränderung insgesamt x, y: " + event.deltaSum.x.toFixed(0) +
-                " " + event.deltaSum.y.toFixed(0),
+              " " + event.deltaSum.y.toFixed(0),
             ))}
             className="text-white bg-brand box-border 
   bg-amber-600 border border-transparent 
@@ -60,6 +101,27 @@ export default function Game({ loaderData }: Route.ComponentProps) {
             Anwort: {user.answer}
           </Draggable>
         ))}
+
+        <Draggable id="123" >
+
+          <Droppable dropedOverID={dropedOverID} id="peter">
+            <div className="bg-amber-600">
+              Peter
+            </div>
+          </Droppable>
+
+        </Draggable>
+
+
+        <Draggable id="124" >
+
+          <Droppable dropedOverID={dropedOverID} id="horst">
+            <div className="bg-amber-600">
+              Horst
+            </div>
+          </Droppable>
+
+        </Draggable>
       </DndContext>
     </ClientOnly>
   );
