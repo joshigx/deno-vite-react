@@ -1,7 +1,6 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from "react";
 
 export function ClientOnly({ children }: { children: ReactNode }) {
-
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -11,4 +10,3 @@ export function ClientOnly({ children }: { children: ReactNode }) {
   if (!hasMounted) return null;
   return <>{children}</>;
 }
-
