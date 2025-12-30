@@ -15,6 +15,7 @@
     "jsr:@std/streams@^1.0.14": "1.0.14",
     "npm:@deno/vite-plugin@1.0.4": "1.0.4_vite@6.3.5__@types+node@25.0.3__tsx@4.21.0__picomatch@4.0.3_@types+node@25.0.3_tsx@4.21.0",
     "npm:@dnd-kit/core@6.3.1": "6.3.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
+    "npm:@dnd-kit/react@0.2.1": "0.2.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@dnd-kit/utilities@3.2.2": "3.2.2_react@19.2.3",
     "npm:@prisma/adapter-pg@7.2.0": "7.2.0",
     "npm:@prisma/client@7.2.0": "7.2.0_prisma@7.2.0__@types+react@19.2.3__react@19.2.3__react-dom@19.2.3___react@19.2.3_@types+react@19.2.3_react@19.2.3_react-dom@19.2.3__react@19.2.3",
@@ -26,6 +27,7 @@
     "npm:@types/react@19.2.3": "19.2.3",
     "npm:dotenv@17.2.3": "17.2.3",
     "npm:eslint-plugin-readable-tailwind@3": "3.0.0_eslint@9.39.2__jiti@2.6.1_tailwindcss@4.1.7_jiti@2.6.1_postcss@8.5.6",
+    "npm:eslint-plugin-readable-tailwind@3.0.0": "3.0.0_eslint@9.39.2__jiti@2.6.1_tailwindcss@4.1.7_jiti@2.6.1_postcss@8.5.6",
     "npm:isbot@5.1.28": "5.1.28",
     "npm:pg@8.16.3": "8.16.3",
     "npm:postgres@3.4.7": "3.4.7",
@@ -343,10 +345,26 @@
         "vite"
       ]
     },
+    "@dnd-kit/abstract@0.2.1": {
+      "integrity": "sha512-XpTZrpfR11elDDw1q4kgD6FV8SH/9rxZhCQcrDaqX9nkEmbaFjFxBFHDg+YK6PmdDp27vxCZXJGa7L7pddRWDw==",
+      "dependencies": [
+        "@dnd-kit/geometry",
+        "@dnd-kit/state",
+        "tslib"
+      ]
+    },
     "@dnd-kit/accessibility@3.1.1_react@19.2.3": {
       "integrity": "sha512-2P+YgaXF+gRsIihwwY1gCsQSYnu9Zyj2py8kY5fFvUM1qm2WA2u639R6YNVfU4GWr+ZM5mqEsfHZZLoRONbemw==",
       "dependencies": [
         "react",
+        "tslib"
+      ]
+    },
+    "@dnd-kit/collision@0.2.1": {
+      "integrity": "sha512-PeykVocROa3TnntD9kIdAHEb2TBT+tyvAvrFDJyE50jDS12JZdMTgreCv02LofLvxdIn3sXEy2XAVuiX7zSJHA==",
+      "dependencies": [
+        "@dnd-kit/abstract",
+        "@dnd-kit/geometry",
         "tslib"
       ]
     },
@@ -357,6 +375,41 @@
         "@dnd-kit/utilities",
         "react",
         "react-dom",
+        "tslib"
+      ]
+    },
+    "@dnd-kit/dom@0.2.1": {
+      "integrity": "sha512-L34SxATObmIvrp9D57iFVtg4rj/ejX/rnrBdbkXkhrnTMacZQXgCryeSlri59hKbSIGtdlzCOKCcBOOdi2PX3w==",
+      "dependencies": [
+        "@dnd-kit/abstract",
+        "@dnd-kit/collision",
+        "@dnd-kit/geometry",
+        "@dnd-kit/state",
+        "tslib"
+      ]
+    },
+    "@dnd-kit/geometry@0.2.1": {
+      "integrity": "sha512-uTbhKi36L3edAL/kUtIWF/xt1e3ivL3kf89qt6f6npU2vRsHyoKV/OaPK1ABZVQp1wBktfZAcG6wFiz67OfCqg==",
+      "dependencies": [
+        "@dnd-kit/state",
+        "tslib"
+      ]
+    },
+    "@dnd-kit/react@0.2.1_react@19.2.3_react-dom@19.2.3__react@19.2.3": {
+      "integrity": "sha512-ixYC5ZXWDHGpK+09yOrmQrMkIY2f+ZFNsS9wM64xDkbydeoYuWfdwtFX97WhHTZvDavOcDG6zCK1QL/rVAHwTQ==",
+      "dependencies": [
+        "@dnd-kit/abstract",
+        "@dnd-kit/dom",
+        "@dnd-kit/state",
+        "react",
+        "react-dom",
+        "tslib"
+      ]
+    },
+    "@dnd-kit/state@0.2.1": {
+      "integrity": "sha512-7axA1ya4KJXxjaj/3hfN1x+jAYjJMzjPk49ZpyMVK/VFm7VJMRY0CN6NJYRmlDYYq1uiEHHNA6K5j6YzoE4/xw==",
+      "dependencies": [
+        "@preact/signals-core",
         "tslib"
       ]
     },
@@ -767,6 +820,9 @@
     },
     "@pkgr/core@0.1.2": {
       "integrity": "sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ=="
+    },
+    "@preact/signals-core@1.12.1": {
+      "integrity": "sha512-BwbTXpj+9QutoZLQvbttRg5x3l5468qaV2kufh+51yha1c53ep5dY4kTuZR35+3pAZxpfQerGJiQqg34ZNZ6uA=="
     },
     "@prisma/adapter-pg@7.2.0": {
       "integrity": "sha512-euIdQ13cRB2wZ3jPsnDnFhINquo1PYFPCg6yVL8b2rp3EdinQHsX9EDdCtRr489D5uhphcRk463OdQAFlsCr0w==",
@@ -2881,6 +2937,7 @@
       "jsr:@std/http@^1.0.16",
       "npm:@deno/vite-plugin@1.0.4",
       "npm:@dnd-kit/core@6.3.1",
+      "npm:@dnd-kit/react@0.2.1",
       "npm:@dnd-kit/utilities@3.2.2",
       "npm:@prisma/adapter-pg@7.2.0",
       "npm:@prisma/client@7.2.0",

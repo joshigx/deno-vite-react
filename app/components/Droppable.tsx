@@ -1,9 +1,11 @@
-import { type ReactNode } from "react";
-import { useDroppable } from "@dnd-kit/core";
+import { useEffect, type ReactNode } from "react";
+import { useDroppable, type UniqueIdentifier } from "@dnd-kit/core";
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   id: string;
+  className?: string;
+  dropedOverID?: UniqueIdentifier | null | undefined
 };
 
 export default function Droppable(props: Props) {
@@ -11,18 +13,19 @@ export default function Droppable(props: Props) {
     id: props.id,
   });
 
-  // const style = {
-  //   padding: '50px',
-  //   backgroundColor: isOver ? 'lightgreen' : 'lightgray',
-  //   border: '2px solid black'
-  // };
-
   const style = {
     color: isOver ? "green" : undefined,
   };
 
+
+
+
+  useEffect(() => {
+    console.log("Über mir (" + props.id + ") wurde etwas gedroppt");
+  }, [props.dropedOverID]);
+
   return (
-    <div ref={setNodeRef} style={style}>
+    <div ref={setNodeRef} style={style} className={props.className}>
       {props.children}
     </div>
   );

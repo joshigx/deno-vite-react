@@ -3,7 +3,7 @@ import { useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 
 import Draggable from "../components/_draggable.tsx";
-import Droppable from "../components/Droppable.tsx";
+import Droppable from "../example Elements (from Tutorial)/_droppable.tsx";
 
 export default function Dnd() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
