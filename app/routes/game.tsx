@@ -118,6 +118,20 @@ export default function Game({ loaderData }: Route.ComponentProps) {
             </Draggable>
           ))}
         </div>
+
+        <div>
+           {users.map((user: User) => (
+            <Draggable
+              startPosition={initialPositions[user.id]}
+              key={user.id}
+              id={user.id}
+              snapBack={false}
+              className={`text-black bg-yellow-500 min-h-25 px-4 py-2.5 w-50 text-center  rounded cursor-pointer select-none`}
+            >
+              Anwort: {user.answer}
+            </Draggable>
+          ))}
+        </div>
         <Draggable id="123">
           <Droppable
             droppedOverID={dropedOverID}
