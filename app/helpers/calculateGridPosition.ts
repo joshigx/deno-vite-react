@@ -13,10 +13,10 @@ interface Viewport {
 export type DraggablePositon = Record<string, { x: number; y: number }>;
 
 export const GRID_CONFIG = {
-  columns: 2,
+  columns: 4,
   cellWidth: 200,
   cellHeight: 100,
-  marginX: 70,
+  marginX: 20,
   marginY: 50,
 };
 
@@ -29,23 +29,38 @@ function calculateGridPosition(
   cellHeight: number,
   marginX: number = 16,
   marginY: number = 16,
-
 ) {
-
   //aktuelle Spalte für den aktuelle Index
   //Bsp: 10 Elemente, 3 Spalten: (0-index): 0%3=0 (Spalte 1) 1%3=0 (Spalte 1) 3 (4. ELement) % 3 = 0 (wieder 1. Spalte aber schon in der 2. Zeile)
   const col = index % columns;
   const row = Math.floor(index / columns);
+  const numberOfRows: number = Math.floor((numberOfUsers - 1) / columns) + 1;
+
+
+  //basis koordinaten für jede karte (der punkt ist immer oben links bei dem jeweiligen container)
+  const baseX = col * (cellWidth + marginX);
+  const baseY = row * (cellHeight + marginY);
+
+
+  const totalGridWidth = cellWidth * columns + marginX * (columns - 1);
+  const totalGridHeight = cellHeight * numberOfRows +
+    marginY * (numberOfRows - 1);
+
+    //DIe Anzahl an Pixeln, die man das Element verschieben muss, damit alle ganz mittig sind, sowohl x und y
+  const offsetX = (viewport.width - totalGridWidth) / 2;
+  const offsetY = (viewport.height - totalGridHeight) / 2;
+
 
   return {
-    x: col * (cellWidth + marginX) + ((viewport.width/2)-((cellWidth*columns)/2)),
-    y: row * (cellHeight + marginY) + ((viewport.height/2)-(((Math.floor(numberOfUsers/columns+1))*(cellHeight+marginY))/2)),
+    x: baseX + offsetX,
+    y: baseY + offsetY,
   };
-
-
 }
 
-export default function getInitialPositions(users: User[], viewport: Viewport): DraggablePositon {
+export default function getInitialPositions(
+  users: User[],
+  viewport: Viewport,
+): DraggablePositon {
   const initialPositions: DraggablePositon = {};
 
   users.forEach((user, index, users) => {

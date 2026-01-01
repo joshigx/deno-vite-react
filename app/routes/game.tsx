@@ -13,7 +13,9 @@ import users from "./api/testUsers.json" with { type: "json" };
 import { ClientOnly } from "../components/ClientOnly.tsx";
 import Droppable from "../components/Droppable.tsx";
 import { useEffect, useState } from "react";
-import getInitialPositions, {GRID_CONFIG} from "../helpers/calculateGridPosition.ts";
+import getInitialPositions, {
+  GRID_CONFIG,
+} from "../helpers/calculateGridPosition.ts";
 
 interface _Room {
   id: string;
@@ -27,14 +29,14 @@ interface User {
   answer: string;
 }
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "wdw Game" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
 
-export function loader({ }: Route.LoaderArgs) {
+export function loader({}: Route.LoaderArgs) {
   const typedUsers: User[] = users as User[];
   const _lenght = typedUsers.length;
 
@@ -42,8 +44,6 @@ export function loader({ }: Route.LoaderArgs) {
 }
 
 export default function Game({ loaderData }: Route.ComponentProps) {
-
-
   //States
   const [viewport, setViewport] = useState({
     width: globalThis.innerWidth,
@@ -54,11 +54,9 @@ export default function Game({ loaderData }: Route.ComponentProps) {
     null,
   );
 
-
   //identifier-Declaration
   const users: User[] = loaderData;
   const initialPositions = getInitialPositions(users, viewport);
-
 
   //Effects
   useEffect(() => {
@@ -67,14 +65,14 @@ export default function Game({ loaderData }: Route.ComponentProps) {
         width: globalThis.innerWidth,
         height: globalThis.innerHeight,
       });
-      console.log("breite: "+ globalThis.innerWidth + ", höhe " + globalThis.innerHeight);
-      
+      console.log(
+        "breite: " + globalThis.innerWidth + ", höhe " + globalThis.innerHeight,
+      );
     };
 
     globalThis.addEventListener("resize", handleResize);
     return () => globalThis.removeEventListener("resize", handleResize);
   }, []);
-
 
   //EventHandler-Declaration für DnD-Context
   const handleDragStart = (e: DragStartEvent) => {
@@ -89,7 +87,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   const handleDragEnd = (e: DragEndEvent) => {
     console.log(
       "Das Draggable: " + e.active.id + " wurde auf " + e.over?.id +
-      " gedroppt",
+        " gedroppt",
     );
 
     if (e.over?.id) {
@@ -106,28 +104,25 @@ export default function Game({ loaderData }: Route.ComponentProps) {
         onDragMove={handleDragMove}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
-        
       >
         <div>
-        {users.map((user: User) => (
-
-          <Draggable
-            startPosition={initialPositions[user.id]}
-            key={user.id}
-            id={user.id}
-            snapBack={false}
-            // onDragEnd={(
-            //   event,
-            // ) => (console.log(
-            //   "Veränderung insgesamt x, y: " + event.deltaSum.x.toFixed(0) +
-            //   " " + event.deltaSum.y.toFixed(0),
-            // ))}
-            className={`text-black bg-yellow-500 min-h-25 px-4 py-2.5 w-50 text-center  rounded cursor-pointer select-none`}
-          >
-            Anwort: {user.answer}
-          </Draggable>
-
-        ))}
+          {users.map((user: User) => (
+            <Draggable
+              startPosition={initialPositions[user.id]}
+              key={user.id}
+              id={user.id}
+              snapBack={false}
+              // onDragEnd={(
+              //   event,
+              // ) => (console.log(
+              //   "Veränderung insgesamt x, y: " + event.deltaSum.x.toFixed(0) +
+              //   " " + event.deltaSum.y.toFixed(0),
+              // ))}
+              className={`text-black bg-yellow-500 min-h-25 px-4 py-2.5 w-50 text-center  rounded cursor-pointer select-none`}
+            >
+              Anwort: {user.answer}
+            </Draggable>
+          ))}
         </div>
         <Draggable id="123">
           <Droppable
