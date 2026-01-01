@@ -1,3 +1,5 @@
+import shuffleArray, { createArrayFromNtoM } from "./fisherYatesShuffle.ts";
+
 interface User {
   id: string;
   locationId: string;
@@ -17,7 +19,7 @@ export const GRID_CONFIG = {
   cellWidth: 200,
   cellHeight: 100,
   marginX: 20,
-  marginY: 50,
+  marginY: 20,
 };
 
 function calculateGridPosition(
@@ -62,11 +64,12 @@ export default function getInitialPositions(
 ): DraggablePositon {
   const initialPositions: DraggablePositon = {};
   const numberOfUsers = users.length;
-  const columns = (numberOfUsers > 6) ? 3 : 2;
-
+  const columns = (numberOfUsers > 5) ? 3 : 2;
+  const orderedArray = createArrayFromNtoM(0, numberOfUsers-1);
+  const shuffledArray = shuffleArray(orderedArray);
   users.forEach((user, index) => {
     initialPositions[user.id] = calculateGridPosition(
-      index,
+      shuffledArray[index],
       viewport,
       numberOfUsers,
       columns,

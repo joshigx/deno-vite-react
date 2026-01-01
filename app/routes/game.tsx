@@ -112,12 +112,6 @@ export default function Game({ loaderData }: Route.ComponentProps) {
               key={user.id}
               id={user.id}
               snapBack={false}
-              // onDragEnd={(
-              //   event,
-              // ) => (console.log(
-              //   "Veränderung insgesamt x, y: " + event.deltaSum.x.toFixed(0) +
-              //   " " + event.deltaSum.y.toFixed(0),
-              // ))}
               className={`text-black bg-yellow-500 min-h-25 px-4 py-2.5 w-50 text-center  rounded cursor-pointer select-none`}
             >
               Anwort: {user.answer}
