@@ -6,6 +6,7 @@ type Props = {
   id: string;
   className?: string;
   droppedOverID?: UniqueIdentifier | null | undefined;
+  position?: { x: number; y: number };
 };
 
 export default function Droppable(props: Props) {
@@ -25,6 +26,9 @@ export default function Droppable(props: Props) {
 
   const style = {
     color: textColor,
+    position: "absolute" as const, // Feste Position im Dokument
+    left: `${props.position?.x || 0}px`,
+    top: `${props.position?.y || 0}px`,
   };
 
   return (
