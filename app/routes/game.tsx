@@ -115,12 +115,15 @@ export default function Game({ loaderData }: Route.ComponentProps) {
         console.log(
           "Über dieser dropzone befindet sich bereits etwas, deswegen wird diese anwort nicht eingeloggt",
         );
-      } //ansonsten
+      } //wenn über dropzone fallen gelassen und dropzone frei
       else {
 
         setLoggedAnswers((prev) => {
+
           // a) Erst altes Vorkommen dieser Antwort entfernen (egal wo sie war)
           const filtered = prev.filter(item => item.answerId !== e.active.id);
+
+          
           // b) Dann neuen Eintrag hinzufügen
           return [
             ...filtered,
@@ -128,11 +131,6 @@ export default function Game({ loaderData }: Route.ComponentProps) {
           ];
         });
 
-        //und in der dropzone einloggen
-        setLoggedAnswers((prev) => [
-          ...prev,
-          { droppableZoneId: e.over!.id, answerId: e.active.id },
-        ]);
       }
 
       console.log(
