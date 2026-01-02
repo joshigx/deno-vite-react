@@ -83,7 +83,7 @@ export default function Draggable(props: DraggableProps) {
     onDragEnd: onDragEnd,
   });
 
-  console.log(draggable.over?.id);
+  //console.log(draggable.over?.id);
 
   const style = {
     position: "absolute" as const, // Feste Position im Dokument

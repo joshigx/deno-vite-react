@@ -28,17 +28,5 @@
     "locationId": "1",
     "name": "Siegbert",
     "answer": "Hauptsachse gesund"
-  },
-  {
-    "id": "007",
-    "locationId": "1",
-    "name": "Horst",
-    "answer": "Hartz IV und der Tag gehört dir."
-  },
-  {
-    "id": "001",
-    "locationId": "1",
-    "name": "Anna",
-    "answer": "Ich bevorzuge Remote-Arbeit"
   }
 ]

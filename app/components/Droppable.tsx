@@ -6,33 +6,43 @@ type Props = {
   id: string;
   className?: string;
   droppedOverID?: UniqueIdentifier | null | undefined;
-  position?: { x: number; y: number };
+  startPosition?: { x: number; y: number; customStyle?: string };
+  draggable?: boolean;
+  snapBack?: boolean;
 };
 
 export default function Droppable(props: Props) {
   //isOver gibt es auch noch
-  const { setNodeRef, isOver } = useDroppable({
+  const droppable = useDroppable({
     id: props.id,
   });
 
   //const [textColor, setTextColor] = useState<string>("undefined")
-  const textColor = isOver ? "green" : "white";
+  //const textColor = droppable.isOver ? "green" : "white";
 
   useEffect(() => {
     if (props.id === props.droppedOverID) {
-      console.log("Über mir (" + props.id + ") wurde etwas gedroppt");
+      console.log(
+        "Über mir (" + props.id + ") wurde etwas gedroppt." +
+          props.droppedOverID,
+      );
     }
   }, [props.droppedOverID]);
 
   const style = {
-    color: textColor,
+    //color: textColor,
     position: "absolute" as const, // Feste Position im Dokument
-    left: `${props.position?.x || 0}px`,
-    top: `${props.position?.y || 0}px`,
+    left: `${props.startPosition?.x || 0}px`,
+    top: `${props.startPosition?.y || 0}px`,
+    zIndex: -1,
   };
 
   return (
-    <div ref={setNodeRef} style={style} className={props.className}>
+    <div
+      ref={droppable.setNodeRef}
+      style={style}
+      className={`${props.className} ${props.startPosition?.customStyle}`}
+    >
       {props.children}
     </div>
   );
