@@ -65,7 +65,7 @@ export default function getInitialPositions(
   const initialPositions: DraggablePositon = {};
   const numberOfUsers = users.length;
   const columns = (numberOfUsers > 5) ? 3 : 2;
-  const orderedArray = createArrayFromNtoM(0, numberOfUsers-1);
+  const orderedArray = createArrayFromNtoM(0, numberOfUsers - 1);
   const shuffledArray = shuffleArray(orderedArray);
   users.forEach((user, index) => {
     initialPositions[user.id] = calculateGridPosition(
