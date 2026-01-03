@@ -7,9 +7,7 @@ import {
   type UniqueIdentifier,
 } from "@dnd-kit/core";
 import type { Route } from "./+types/game.ts";
-import {
-  restrictToWindowEdges,
-} from "@dnd-kit/modifiers";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 
 import Draggable from "../components/Draggable.tsx";
 import users from "./api/testUsers.json" with { type: "json" };
@@ -18,9 +16,8 @@ import Droppable from "../components/Droppable.tsx";
 import { useEffect, useState } from "react";
 import getInitialPositions from "../helpers/calculateGridPosition.ts";
 import getInitialDroppablePositions from "../helpers/calculateDroppablePositions.ts";
-import type { User, Viewport, loggedAnswer } from "../types/types.ts";
+import type { loggedAnswer, User, Viewport } from "../types/types.ts";
 import ControlBar from "../components/ControlBar.tsx";
-
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -78,7 +75,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   }, []);
 
   useEffect(() => {
-    setAnswersSubmitted(false)
+    setAnswersSubmitted(false);
     console.log(loggedAnswers);
 
     console.log(
@@ -164,17 +161,11 @@ export default function Game({ loaderData }: Route.ComponentProps) {
       setAttempts((s) => s + 1);
 
       setAnswersSubmitted(true);
-
-
-
-
-
     } else {
       alert(`Du hast noch nicht alle Karten eingeloggt`);
-      setAnswersSubmitted(false)
+      setAnswersSubmitted(false);
     }
   }
-
 
   return (
     <div className="">

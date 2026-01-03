@@ -22,4 +22,3 @@ export type loggedAnswer = {
   droppableZoneId: UniqueIdentifier;
   answerId: UniqueIdentifier;
 };
-
