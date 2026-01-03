@@ -1,4 +1,7 @@
 import shuffleArray, { createArrayFromNtoM } from "./fisherYatesShuffle.ts";
+import { DRAGGABLE_GRID_CONFIG as GRID_CONFIG } from "./config.ts";
+import type { Viewport } from "../types/types.ts";
+
 
 interface User {
   id: string;
@@ -7,20 +10,8 @@ interface User {
   answer: string;
 }
 
-interface Viewport {
-  width: number;
-  height: number;
-}
 
 export type DraggablePositon = Record<string, { x: number; y: number }>;
-
-export const GRID_CONFIG = {
-  // columns: 2,
-  cellWidth: 200,
-  cellHeight: 100,
-  marginX: 20,
-  marginY: 20,
-};
 
 function calculateGridPosition(
   index: number,

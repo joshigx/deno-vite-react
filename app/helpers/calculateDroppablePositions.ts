@@ -1,13 +1,12 @@
+import { DROPPABLE_GRID_CONFIG as GRID_CONFIG } from "./config.ts";
+import type { Viewport } from "../types/types.ts";
+
+
 interface User {
   id: string;
   locationId: string;
   name: string;
   answer: string;
-}
-
-interface Viewport {
-  width: number;
-  height: number;
 }
 
 interface CardsPerSide {
@@ -21,13 +20,6 @@ export type DraggablePositon = Record<
   string,
   { x: number; y: number; customStyle: string }
 >;
-
-export const GRID_CONFIG = {
-  // columns: 2,
-  cellWidth: 200,
-  cellHeight: 100,
-  margin: 20,
-};
 
 function calculateGridPosition(
   index: number,
