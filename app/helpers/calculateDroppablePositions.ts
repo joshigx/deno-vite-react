@@ -1,6 +1,8 @@
-import { DROPPABLE_GRID_CONFIG as GRID_CONFIG, controlBarHeight } from "./config.ts";
-import type { Viewport, User  } from "../types/types.ts";
-
+import {
+  controlBarHeight,
+  DROPPABLE_GRID_CONFIG as GRID_CONFIG,
+} from "./config.ts";
+import type { User, Viewport } from "../types/types.ts";
 
 interface CardsPerSide {
   top: number;
@@ -9,7 +11,7 @@ interface CardsPerSide {
   left: number;
 }
 
-export type DraggablePositon = Record<
+export type DroppablePositon = Record<
   string,
   { x: number; y: number; customStyle: string }
 >;
@@ -91,11 +93,11 @@ function calculateGridPosition(
 export default function getInitialDroppablePositions(
   users: User[],
   viewport: Viewport,
-): DraggablePositon {
-  const initialPositions: DraggablePositon = {};
+): DroppablePositon {
+  const initialPositions: DroppablePositon = {};
   const numberOfUsers = users.length;
   const viewportWithOffset: Viewport = {
-    height: viewport.height-controlBarHeight,
+    height: viewport.height - controlBarHeight,
     width: viewport.width,
   };
 

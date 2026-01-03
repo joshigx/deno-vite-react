@@ -54,6 +54,9 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   const [loggedAnswers, setLoggedAnswers] = useState<loggedAnswer[]>([]);
   const [allLoggedIn, setAllLoggedIn] = useState(false);
 
+  //speicherrt die Versuche
+  const [attempts, setAttempts] = useState(0);
+
   //identifier-Declaration
   const users: User[] = loaderData;
   const initialPositions = getInitialPositions(users, viewport);
@@ -79,6 +82,9 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   }, []);
 
 
+
+
+
   useEffect(() => {
 
     console.log(loggedAnswers);
@@ -89,8 +95,10 @@ export default function Game({ loaderData }: Route.ComponentProps) {
 
     if (loggedAnswers.length === users.length) {
       console.log("Alles eingeloggt");
-      setAllLoggedIn(true)
+
     }
+
+
 
   }, [loggedAnswers]);
 
@@ -159,51 +167,72 @@ export default function Game({ loaderData }: Route.ComponentProps) {
     }
   };
 
+
+  //wird ausgelöst, wenn "Antwort prüfen" gedrückt wurde
+  function testAnswers() {
+    console.log("Antwort prüfen wurde gedrückt");
+    if (loggedAnswers.length === users.length) {
+      console.log("Alles eingeloggt");
+      
+      setAttempts(s => s + 1)
+
+    }
+    else {
+      alert(`Du hast noch nicht alle Karten eingeloggt`)
+    }
+
+
+
+  }
   return (
     <div
-    className="">
-    <ClientOnly>
-      
-      <DndContext
-        onDragStart={handleDragStart}
-        onDragMove={handleDragMove}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToWindowEdges]}
-      >
+      className="">
+      <ClientOnly>
         <div>
-          {users.map((user: User) => (
-            <Draggable
-              startPosition={initialPositions[user.id]}
-              key={user.id}
-              id={user.id}
-              snapBack={false}
-              className={`text-black bg-yellow-500 min-h-24 px-4 py-2.5 w-45 text-center  rounded cursor-pointer select-none`}
-            viewport={viewport}
-            >
-              Anwort: {user.answer}
-            </Draggable>
-          ))}
+          <DndContext
+            onDragStart={handleDragStart}
+            onDragMove={handleDragMove}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToWindowEdges]}
+          >
+            <div>
+              {users.map((user: User) => (
+                <Draggable
+                  startPosition={initialPositions[user.id]}
+                  key={user.id}
+                  id={user.id}
+                  snapBack={false}
+                  className={`text-black bg-yellow-500 min-h-24 px-4 py-2.5 w-45 text-center  rounded cursor-pointer select-none`}
+                  viewport={viewport}
+                  positionsOfDroppable={initialDroppablePositions}
+                >
+                  Anwort: {user.answer}
+                </Draggable>
+              ))}
+            </div>
+
+            <div>
+              {users.map((user: User) => (
+                <Droppable
+                  id={user.id}
+                  key={user.id}
+                  droppedOverID={dropedOverID}
+                  startPosition={initialDroppablePositions[user.id]}
+                  className={` text-black  min-h-25 px-4 py-2.5 w-50 text-center rounded cursor-pointer select-none`}
+                >
+                  {user.name}
+                </Droppable>
+              ))}
+            </div>
+          </DndContext>
         </div>
 
-        <div>
-          {users.map((user: User) => (
-            <Droppable
-              id={user.id}
-              key={user.id}
-              droppedOverID={dropedOverID}
-              startPosition={initialDroppablePositions[user.id]}
-              className={` text-black  min-h-25 px-4 py-2.5 w-50 text-center rounded cursor-pointer select-none`}
-            >
-              {user.name}
-            </Droppable>
-          ))}
-        </div>
-      </DndContext>
-     
-    <ControlBar></ControlBar>      
-    </ClientOnly>
+        <ControlBar
+          testAnswers={testAnswers}
+          attempts={attempts}></ControlBar>
+      </ClientOnly>
 
-     </div>
+    </div>
   );
 }
