@@ -15,6 +15,7 @@ import Droppable from "../components/Droppable.tsx";
 import { useEffect, useState } from "react";
 import getInitialPositions from "../helpers/calculateGridPosition.ts";
 import getInitialDroppablePositions from "../helpers/calculateDroppablePositions.ts";
+import type { Viewport } from "../types/types.ts";
 
 interface _Room {
   id: string;
@@ -33,14 +34,14 @@ type loggedAnswer = {
   answerId: UniqueIdentifier;
 };
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "wdw Game" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
 
-export function loader({ }: Route.LoaderArgs) {
+export function loader({}: Route.LoaderArgs) {
   const typedUsers: User[] = users as User[];
   const _lenght = typedUsers.length;
 
@@ -48,10 +49,12 @@ export function loader({ }: Route.LoaderArgs) {
 }
 
 export default function Game({ loaderData }: Route.ComponentProps) {
+  //wie viel vom unteren bildschirm platz gelassen wird für leiste
+  const controlBar = 0;
   //States
-  const [viewport, setViewport] = useState({
+  const [viewport, setViewport] = useState<Viewport>({
     width: globalThis.innerWidth,
-    height: globalThis.innerHeight,
+    height: globalThis.innerHeight - controlBar,
   });
 
   const [dropedOverID, setDroppedOverID] = useState<UniqueIdentifier | null>(
@@ -73,7 +76,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
     const handleResize = () => {
       setViewport({
         width: globalThis.innerWidth,
-        height: globalThis.innerHeight,
+        height: globalThis.innerHeight - controlBar,
       });
       console.log(
         "breite: " + globalThis.innerWidth + ", höhe " + globalThis.innerHeight,
@@ -109,7 +112,6 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   const handleDragEnd = (e: DragEndEvent) => {
     //wenn ein item über dropzone losgelassen wird
     if (e.over) {
-
       //wenn zu diesem droppable bereits eine anwort existiert nichts machen
       if (loggedAnswers.some((item) => item.droppableZoneId === e.over!.id)) {
         console.log(
@@ -117,25 +119,21 @@ export default function Game({ loaderData }: Route.ComponentProps) {
         );
       } //wenn über dropzone fallen gelassen und dropzone frei
       else {
-
         setLoggedAnswers((prev) => {
-
           // a) Erst altes Vorkommen dieser Antwort entfernen (egal wo sie war)
-          const filtered = prev.filter(item => item.answerId !== e.active.id);
+          const filtered = prev.filter((item) => item.answerId !== e.active.id);
 
-          
           // b) Dann neuen Eintrag hinzufügen
           return [
             ...filtered,
-            { droppableZoneId: e.over!.id, answerId: e.active.id }
+            { droppableZoneId: e.over!.id, answerId: e.active.id },
           ];
         });
-
       }
 
       console.log(
         "Das Draggable: " + e.active.id + " wurde auf " + e.over?.id +
-        " gedroppt",
+          " gedroppt",
       );
     } //wenn das item ins leere gezogen wird
 
