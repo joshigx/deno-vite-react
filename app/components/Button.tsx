@@ -20,6 +20,7 @@ const colorClasses: Record<Color, string> = {
 interface ButtonProps {
     children?: ReactNode
     bgColor: Color
+    isDisabled?: boolean
     onClick?: () => void
 }
 export default function Button(props: ButtonProps) {
@@ -27,6 +28,7 @@ export default function Button(props: ButtonProps) {
 
     return (
         <button
+            disabled={false}
             type="button"
             className={`text-white ${colorClasses[props.bgColor]} 
             box-border border border-transparent font-medium leading-5 rounded-full

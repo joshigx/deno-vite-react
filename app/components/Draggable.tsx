@@ -1,11 +1,11 @@
 //import { CSS } from '@dnd-kit/utilities';
-import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { useCustomDraggable } from "../hooks/useCustomDraggable.ts";
+import { type ReactNode, useEffect, useState } from "react";
 import type { DragEndEvent } from "../hooks/useCustomDraggable.ts";
 import type { Viewport } from "../types/types.ts";
-import { DRAGGABLE_GRID_CONFIG } from "../helpers/config.ts"
+//import { DRAGGABLE_GRID_CONFIG } from "../helpers/config.ts"
 import type { Transform } from "@dnd-kit/utilities";
-import { useDraggable } from "@dnd-kit/core";
+import { useDraggable, type Over } from "@dnd-kit/core";
+import getInitialDroppablePositions, { type DroppablePositon } from "../helpers/calculateDroppablePositions.ts";
 
 /**
  * Properties for a Draggable component.
@@ -55,7 +55,8 @@ type DraggableProps = {
   className?: string;
   snapBack?: boolean;
   onDragEnd?: (event: DragEndEvent) => void;
-  viewport: Viewport
+  viewport: Viewport;
+  positionsOfDroppable?: DroppablePositon;
 };
 
 export default function Draggable(props: DraggableProps) {
@@ -66,6 +67,7 @@ export default function Draggable(props: DraggableProps) {
   });
 
   const [lastTransform, setLastTransform] = useState<Transform | null>(null)
+  const [lastOver, setLastOver] = useState<Over | null>(null)
 
   /**
    * Handles the drag end event and updates the position of the draggable component.
@@ -75,13 +77,28 @@ export default function Draggable(props: DraggableProps) {
    * @param event - The drag end event containing information about the drag operation.
    */
   function onDragEnd(delta: { x: number, y: number }) {
+    console.log("draggable wurde gedropt auf: " + lastOver?.id);
 
-    if (snapBack === false) {
+    if (lastOver && props.positionsOfDroppable) {
+      console.log("snap to droppable wird ausgeführt");
+
+      const snapPosition = props.positionsOfDroppable[lastOver.id]
+
+      setPosition({
+        x: snapPosition.x,
+        y: snapPosition.y,
+      });
+    }
+
+    else {
+      if (snapBack === false) {
       setPosition((prev) => ({
         x: prev.x + delta.x,
         y: prev.y + delta.y,
       }));
     }
+    }
+    
   }
 
   const draggableObj = useDraggable({
@@ -105,6 +122,10 @@ export default function Draggable(props: DraggableProps) {
 
 
 
+
+
+
+    setLastOver(draggableObj.over)
     setLastTransform(draggableObj.transform)
   }, [draggableObj.transform])
 
@@ -118,6 +139,7 @@ export default function Draggable(props: DraggableProps) {
     zIndex: draggableObj.transform ? 1 : 0,
     touchAction: "none",
   };
+
 
   return (
     <div
