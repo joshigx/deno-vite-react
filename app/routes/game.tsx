@@ -18,6 +18,7 @@ import getInitialPositions from "../helpers/calculateGridPosition.ts";
 import getInitialDroppablePositions from "../helpers/calculateDroppablePositions.ts";
 import type { loggedAnswer, User, Viewport } from "../types/types.ts";
 import ControlBar from "../components/ControlBar.tsx";
+import { onDragEnd } from "../helpers/onDragEnd.ts";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -35,16 +36,23 @@ export function loader({}: Route.LoaderArgs) {
 
 export default function Game({ loaderData }: Route.ComponentProps) {
   //States
+
+  //speichert die aktuelle viewport größe
   const [viewport, setViewport] = useState<Viewport>({
     width: globalThis.innerWidth,
     height: globalThis.innerHeight,
   });
 
+  //speicht die id der dropzone, über der zuletzt etwas losgelassen wurde
   const [dropedOverID, setDroppedOverID] = useState<UniqueIdentifier | null>(
     null,
   );
 
+  //beinhaltet ein Array vom Typ loggedAnswer, mit allen bisher eingeloggeten Antworten
+  //in der DragEnd Funktion werden die Antworten hinzugefügt / entfernt
   const [loggedAnswers, setLoggedAnswers] = useState<loggedAnswer[]>([]);
+
+  //sagt aus, ob alle Anworten eingeloggt und dann abgeschickt worden
   const [answersSubmitted, setAnswersSubmitted] = useState(false);
 
   //speicherrt die Versuche
@@ -52,6 +60,8 @@ export default function Game({ loaderData }: Route.ComponentProps) {
 
   //identifier-Declaration
   const users: User[] = loaderData;
+
+  //lädt / berechnet die initialen positionen der draggables und droppables
   const initialPositions = getInitialPositions(users, viewport);
   const initialDroppablePositions = getInitialDroppablePositions(
     users,
@@ -59,7 +69,10 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   );
 
   //Effects
+
+  //wird ausgelöst, wenn die Seite das erste mal geladen wird
   useEffect(() => {
+    //fügt event listener für fenster größen änderung hinzu
     const handleResize = () => {
       setViewport({
         width: globalThis.innerWidth,
@@ -74,6 +87,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
     return () => globalThis.removeEventListener("resize", handleResize);
   }, []);
 
+  //wird ausgelöst, wenn sich der loggedAnswers state ändert
   useEffect(() => {
     setAnswersSubmitted(false);
     console.log(loggedAnswers);
@@ -97,63 +111,66 @@ export default function Game({ loaderData }: Route.ComponentProps) {
   const handleDragOver = (_e: DragOverEvent) => {
   };
 
+  //wird ausgelöst, wenn das ziehen beendet wird und das item losgelassen wird
   const handleDragEnd = (e: DragEndEvent) => {
-    //wenn ein item über dropzone losgelassen wird
-    if (e.over) {
-      //wenn zu diesem droppable bereits eine anwort existiert nichts machen
-      if (loggedAnswers.some((item) => item.droppableZoneId === e.over!.id)) {
-        console.log(
-          "Über dieser dropzone befindet sich bereits etwas, deswegen wird diese anwort nicht eingeloggt",
-        );
-      } //wenn über dropzone fallen gelassen und dropzone frei
-      else {
-        setLoggedAnswers((prev) => {
-          // a) Erst altes Vorkommen dieser Antwort entfernen (egal wo sie war)
-          const filtered = prev.filter((item) => item.answerId !== e.active.id);
+    onDragEnd(e, loggedAnswers, setLoggedAnswers, setDroppedOverID);
 
-          // b) Dann neuen Eintrag hinzufügen
-          return [
-            ...filtered,
-            { droppableZoneId: e.over!.id, answerId: e.active.id },
-          ];
-        });
-      }
+    // //wenn ein item über dropzone losgelassen wird
+    // if (e.over) {
+    //   //wenn zu diesem droppable bereits eine anwort existiert nichts machen
+    //   if (loggedAnswers.some((item) => item.droppableZoneId === e.over!.id)) {
+    //     console.log(
+    //       "Über dieser dropzone befindet sich bereits etwas, deswegen wird diese anwort nicht eingeloggt",
+    //     );
+    //   } //wenn über dropzone fallen gelassen und dropzone frei
+    //   else {
+    //     setLoggedAnswers((prev) => {
+    //       // a) Erst altes Vorkommen dieser Antwort entfernen (egal wo sie war)
+    //       const filtered = prev.filter((item) => item.answerId !== e.active.id);
 
-      console.log(
-        "Das Draggable: " + e.active.id + " wurde auf " + e.over?.id +
-          " gedroppt",
-      );
-    } //wenn das item ins leere gezogen wird
+    //       // b) Dann neuen Eintrag hinzufügen
+    //       return [
+    //         ...filtered,
+    //         { droppableZoneId: e.over!.id, answerId: e.active.id },
+    //       ];
+    //     });
+    //   }
 
-    else {
-      console.log("Das Draggable wurde nicht über einer dropzone losgelassen");
+    //   console.log(
+    //     "Das Draggable: " + e.active.id + " wurde auf " + e.over?.id +
+    //     " gedroppt",
+    //   );
+    // } //wenn das item ins leere gezogen wird
 
-      //ebenfalls ausloggen
-      //ausloggfunktion bauen und dann doppelten code ersetzen
-      setLoggedAnswers((prev) => {
-        // Prüfen, ob das Element überhaupt existiert (optional für Logging, aber gut für Logik)
-        const exists = prev.some((item) => item.answerId === e.active.id);
+    // else {
+    //   console.log("Das Draggable wurde nicht über einer dropzone losgelassen");
 
-        if (exists) {
-          console.log("war vorher aber in einer -> wird entfernt");
-          // Neues Array zurückgeben OHNE das Element
-          return prev.filter((item) => item.answerId !== e.active.id);
-        }
+    //   //ebenfalls ausloggen
+    //   //ausloggfunktion bauen und dann doppelten code ersetzen
+    //   setLoggedAnswers((prev) => {
+    //     // Prüfen, ob das Element überhaupt existiert (optional für Logging, aber gut für Logik)
+    //     const exists = prev.some((item) => item.answerId === e.active.id);
 
-        // Wenn es nicht existierte, nichts ändern (alten State zurückgeben)
-        return prev;
-      });
-    }
+    //     if (exists) {
+    //       console.log("war vorher aber in einer -> wird entfernt");
+    //       // Neues Array zurückgeben OHNE das Element
+    //       return prev.filter((item) => item.answerId !== e.active.id);
+    //     }
 
-    if (e.over?.id) {
-      setDroppedOverID(e.over.id);
-    } else {
-      setDroppedOverID(null);
-    }
+    //     // Wenn es nicht existierte, nichts ändern (alten State zurückgeben)
+    //     return prev;
+    //   });
+    // }
+
+    // if (e.over?.id) {
+    //   setDroppedOverID(e.over.id);
+    // } else {
+    //   setDroppedOverID(null);
+    // }
   };
 
   //wird ausgelöst, wenn "Antwort prüfen" gedrückt wurde
-  function testAnswers() {
+  function submitAnswers() {
     console.log("Antwort prüfen wurde gedrückt");
     if (loggedAnswers.length === users.length) {
       console.log("Alles eingeloggt");
@@ -212,7 +229,7 @@ export default function Game({ loaderData }: Route.ComponentProps) {
         </div>
 
         <ControlBar
-          testAnswers={testAnswers}
+          testAnswers={submitAnswers}
           attempts={attempts}
         >
         </ControlBar>
