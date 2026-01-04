@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { type UniqueIdentifier, useDroppable } from "@dnd-kit/core";
 import { type loggedAnswer } from "../types/types.ts";
+import { validateAnswers } from "../helpers/validateAnswers.ts";
 
 type Props = {
   children?: ReactNode;
@@ -10,30 +11,22 @@ type Props = {
   startPosition?: { x: number; y: number; customStyle?: string };
   draggable?: boolean;
   snapBack?: boolean;
-  loggedAnswers?: loggedAnswer[] | null;
+  loggedAnswers: loggedAnswer[] | null;
 };
 
 export default function Droppable(props: Props) {
   //isOver gibt es auch noch
 
   //0 = noch nichts eingeloggt (standard), 1 richtige Anwrot, -1 falsche antwort
-  const [answerState, setAnswerState] = useState(0);
+  const [localAnswerState, setLocalAnswerState] = useState(0);
 
+  //Valuiert die Antworten aus
   useEffect(() => {
-    if (props.loggedAnswers) {
-      props.loggedAnswers.forEach((answer) => {
-        if (answer.droppableZoneId === props.id) {
-          if (answer.answerId === answer.droppableZoneId) {
-            //richtige Anwort
-            setAnswerState(1);
-          } else {
-            setAnswerState(-1);
-          }
-        }
-      });
-    } else {
-      setAnswerState(0);
-    }
+    validateAnswers(
+      props.loggedAnswers,
+      props.id,
+      setLocalAnswerState,
+    );
   }, [props.loggedAnswers, props.id]);
 
   const droppableObj = useDroppable({
@@ -67,11 +60,11 @@ export default function Droppable(props: Props) {
       className={`${props.className} ${props.startPosition?.customStyle} ${
         droppableObj.isOver
           ? "bg-gray-500"
-          : ((answerState === 0)
+          : ((localAnswerState === 0)
             ? "bg-gray-300"
-            : (answerState === -1
+            : (localAnswerState === -1
               ? "bg-red-700"
-              : (answerState === 1 ? "bg-green-600" : "bg-gray-300")))
+              : (localAnswerState === 1 ? "bg-green-600" : "bg-gray-300")))
       } `}
     >
       {props.children}
